@@ -16,7 +16,9 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 # ── App Setup ────────────────────────────────────────────────────────────────
 app       = FastAPI(title="FileShare")
 templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
 
 # ── Storage Setup ─────────────────────────────────────────────────────────────
 UPLOAD_DIR = Path("uploads")
