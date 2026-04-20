@@ -14,9 +14,10 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 # ── App Setup ────────────────────────────────────────────────────────────────
-app       = FastAPI(title="FileShare")
+app       = FastAPI(title="TransFile")
 templates = Jinja2Templates(directory="templates")
 # app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 
 
@@ -76,7 +77,7 @@ def purge_expired_files():
             os.remove(file_path)
         del db[token]
     save_db(db)
-    print(f"[FileShare] Purged {len(expired)} expired file(s).")
+    print(f"[TransFile] Purged {len(expired)} expired file(s).")
 
 # ── Scheduler Lifecycle ───────────────────────────────────────────────────────
 scheduler = AsyncIOScheduler()
@@ -85,7 +86,7 @@ scheduler = AsyncIOScheduler()
 async def start_scheduler():
     scheduler.add_job(purge_expired_files, "interval", minutes=1, id="expiry_job")
     scheduler.start()
-    print(f"[FileShare] Auto-expiry enabled — files deleted after {FILE_EXPIRY_MINS} min.")
+    print(f"[TransFile] Auto-expiry enabled — files deleted after {FILE_EXPIRY_MINS} min.")
 
 @app.on_event("shutdown")
 async def stop_scheduler():
